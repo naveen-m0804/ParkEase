@@ -90,34 +90,7 @@ const Login = () => {
     }
   };
 
-  if (firebaseUser) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background p-4 relative overflow-hidden">
-        <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background -z-10" />
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" as const }}
-          className="w-full max-w-md glass rounded-xl border border-border p-8 text-center relative z-10"
-        >
-            <BrandLogo className="h-16 w-16 mx-auto mb-6" />
-            <h1 className="text-2xl font-bold mb-4">You are logged in</h1>
-            <p className="mb-6 text-muted-foreground">{firebaseUser.email}</p>
-            <div className="space-y-3">
-                <Button onClick={() => navigate('/')} className="w-full font-bold">
-                    Go to Dashboard
-                </Button>
-                <Button variant="outline" onClick={() => navigate('/register')} className="w-full">
-                    Complete Registration
-                </Button>
-                <Button variant="ghost" onClick={() => signOut(auth)} className="w-full text-rose-500 hover:text-rose-600 hover:bg-rose-500/10">
-                    Sign Out
-                </Button>
-            </div>
-        </motion.div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-background relative overflow-x-hidden selection:bg-primary/20">
