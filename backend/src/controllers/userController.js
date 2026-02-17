@@ -48,14 +48,10 @@ const UserController = {
   async getProfile(req, res, next) {
     try {
       if (req.user.isNewUser) {
-        return res.status(200).json({
-          status: 'success',
-          message: 'User is authenticated but not registered yet.',
-          data: {
-            firebaseUid: req.user.firebaseUid,
-            email: req.user.email,
-            isNewUser: true,
-          },
+        return res.status(404).json({
+          status: 'fail',
+          message: 'User not registered in database.',
+          code: 'USER_NOT_FOUND'
         });
       }
 

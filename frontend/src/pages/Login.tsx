@@ -56,8 +56,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       try {
         await api.get('/users/me');
-        toast.success('Login successful!');
-        navigate('/');
+
       } catch (backendErr: any) {
         if (backendErr.response?.status === 404) {
           // User exists in Firebase but not in DB (Zombie state)
