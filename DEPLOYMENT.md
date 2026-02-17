@@ -12,38 +12,44 @@ This guide details how to deploy the **ParkEase** project (Frontend + Backend + 
 
 ---
 
-## Step 1: Deploy PostgreSQL Database
+## Step 1: Deploy PostgreSQL Database (Supabase)
 
-1.  Log in to your Render Dashboard.
-2.  Click **New +** and select **PostgreSQL**.
-3.  **Name**: `parkease-db` (or similar).
-4.  **Region**: Choose the region closest to you (e.g., Singapore, Frankfurt, Oregon).
-5.  **Instance Type**: "Free" (good for development) or "Starter".
-6.  Click **Create Database**.
-7.  **Wait** for it to be created.
-8.  **Copy the `Internal Database URL`**. You will need this for the Backend.
+1.  Log in to [Supabase](https://supabase.com/).
+2.  Click **New Project**.
+3.  **Project Organization**: Select your default org.
+4.  **Name**: `parkease-db`.
+5.  **Database Password**: Create a strong password (copy this!).
+6.  **Region**: Choose the region closest to you (e.g., Singapore, Frankfurt, Oregon).
+7.  Click **Create new project**.
+8.  Wait for the project to provision.
+9.  Go to **Project Settings** (gear icon) -> **Database**.
+10. Under **Connection string** -> **URI**, ensure `Mode: Transaction` (port 6543) or `Session` (port 5432) is selected. Use **Session Mode (port 5432)** for direct connections if possible, or create a connection pooler.
+    - Copy the Connection String. It looks like: `postgresql://postgres.[ref]:[password]@[host]:5432/postgres`
+    - You will need this for the Backend environment variable `DATABASE_URL`.
+11. **Enable PostGIS**: Go to **Database** -> **Extensions**. Search for `postgis` and enable it.
 
 ---
 
-## Step 2: Deploy Backend (Node.js)
+## Step 2: Deploy Backend (Render)
 
-1.  Click **New +** and select **Web Service**.
-2.  Connect your **GitHub repository**.
-3.  Configure the service:
+1.  Log in to your Render Dashboard.
+2.  Click **New +** and select **Web Service**.
+3.  Connect your **GitHub repository**.
+4.  Configure the service:
     -   **Name**: `parkease-backend`
     -   **Root Directory**: `backend`
     -   **Environment**: `Node`
-    -   **Build Command**: `npm install`
+    -   **Build Command**: `npm install && npm run db:migrate`
     -   **Start Command**: `node src/server.js`
-4.  **Environment Variables** (Click "Advanced" or scroll to "Environment Variables"):
-    -   `DATABASE_URL` = Paste the **Internal Database URL** from Step 1.
+5.  **Environment Variables** (Click "Advanced" or scroll to "Environment Variables"):
+    -   `DATABASE_URL` = Paste the **Supabase Connection String** from Step 1. (Make sure to replace `[password]` with your actual password).
     -   `NODE_ENV` = `production`
-    -   `PORT` = `10000` (Render default, or whatever your server uses. Your code uses `PORT` env var).
+    -   `PORT` = `10000` (Render default).
     -   `FIREBASE_PROJECT_ID` = *(Check your `firebase-service-account.json`)*
     -   `FIREBASE_CLIENT_EMAIL` = *(Check your `firebase-service-account.json`)*
     -   `FIREBASE_PRIVATE_KEY` = *(Check your `firebase-service-account.json` - Copy the whole key including `-----BEGIN...`)*
     -   `CORS_ORIGINS` = `http://localhost:5173,https://your-frontend-name.onrender.com` (Add your frontend URL here *after* step 3).
-5.  Click **Create Web Service**.
+6.  Click **Create Web Service**.
 
 ---
 

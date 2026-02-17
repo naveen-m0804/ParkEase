@@ -61,8 +61,12 @@ const testConnection = async () => {
     console.log(`✅ Database connected at ${res.rows[0].now}`);
 
     // Verify PostGIS extension
-    const postgis = await pool.query("SELECT PostGIS_Version() AS version");
-    console.log(`✅ PostGIS version: ${postgis.rows[0].version}`);
+    try {
+      const postgis = await pool.query("SELECT PostGIS_Version() AS version");
+      console.log(`✅ PostGIS version: ${postgis.rows[0].version}`);
+    } catch (e) {
+      console.warn('⚠️  PostGIS not detected. It will be enabled during migration.');
+    }
   } catch (err) {
     console.error('❌ Database connection failed:', err.message);
     throw err;
