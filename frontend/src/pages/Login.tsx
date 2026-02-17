@@ -60,8 +60,11 @@ const Login = () => {
         navigate('/');
       } catch (backendErr: any) {
         if (backendErr.response?.status === 404) {
-          toast.info('Please complete your registration.');
-          navigate('/register');
+          // User exists in Firebase but not in DB (Zombie state)
+          // Sign out immediately preventing the "Complete Profile" screen
+          await signOut(auth);
+          toast.error('Account not found. Please sign up.');
+          // Do NOT navigate to register, let them choose.
         } else {
           throw backendErr;
         }
