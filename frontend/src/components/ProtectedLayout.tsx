@@ -20,7 +20,7 @@ const ProtectedLayout = () => {
   }
 
   if (!firebaseUser) return <Navigate to="/login" replace />;
-  if (isNewUser) return <Navigate to="/register" replace />;
+  if (isNewUser) return <Navigate to="/login" replace />;
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0 md:pl-60">
