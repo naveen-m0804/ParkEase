@@ -59,6 +59,7 @@ const authenticate = async (req, res, next) => {
       };
     }
 
+
     next();
   } catch (err) {
     console.error('🔒 Auth middleware error:', err.message);
