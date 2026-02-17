@@ -64,6 +64,9 @@ This guide details how to deploy the **ParkEase** project (Frontend + Backend + 
     -   **Publish Directory**: `dist`
 4.  **Environment Variables**:
     -   `VITE_API_BASE_URL` = The **URL of your deployed Backend** (e.g., `https://parkease-backend.onrender.com`).
+    -   `VITE_FIREBASE_API_KEY` = Your Firebase API Key (from `firebaseAPIKeys.txt` or Firebase Console).
+    -   `VITE_FIREBASE_AUTH_DOMAIN` = `parkease-5f337.firebaseapp.com`
+    -   `VITE_FIREBASE_PROJECT_ID` = `parkease-5f337`
 5.  **Redirects/Rewrites** (Crucial for React Router):
     -   Go to the **Redirects/Rewrites** tab.
     -   Add a new rule:

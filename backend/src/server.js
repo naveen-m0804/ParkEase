@@ -73,9 +73,8 @@ async function startServer() {
       console.log(`\n${'='.repeat(40)}`);
       console.log(`   🅿️  ParkEase Server Running`);
       console.log(`${'='.repeat(40)}`);
-      console.log(`   🌐 Local:       http://localhost:${config.port}`);
+      console.log(`   🌐 Server:      Listening on port ${config.port}`);
       console.log(`   🌍 Env:         ${config.nodeEnv}`);
-      console.log(`   💚 Health:      http://localhost:${config.port}/health`);
       console.log(`${'='.repeat(40)}\n`);
     });
   } catch (err) {
