@@ -41,6 +41,15 @@ app.get('/health', (req, res) => {
 // ── API Routes ──
 app.use('/api/v1', routes);
 
+// ── Root Route ──
+app.get('/', (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Welcome to ParkEase Backend API. Use /api/v1 for endpoints.',
+    docs: 'https://github.com/naveen-m0804/ParkEase' // Optional: Link to your repo or docs
+  });
+});
+
 // ── Serve Frontend (Production) ──
 // ── 404 Handler ──
 app.use((req, res) => {
