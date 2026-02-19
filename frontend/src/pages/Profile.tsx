@@ -338,7 +338,7 @@ const Profile = () => {
           <div className="space-y-4 py-2">
             <div>
               <label className="text-xs font-medium mb-1 block">Location Details</label>
-              <Input placeholder="Place Name (e.g. Saveetha Parking)" value={pForm.placeName} onChange={e => setPForm(f => ({ ...f, placeName: e.target.value }))} className="bg-muted border-border mb-2" />
+              <Input placeholder="Place Name" value={pForm.placeName} onChange={e => setPForm(f => ({ ...f, placeName: e.target.value }))} className="bg-muted border-border mb-2" />
               <Input placeholder="Full Address" value={pForm.address} onChange={e => setPForm(f => ({ ...f, address: e.target.value }))} className="bg-muted border-border" />
             </div>
 
