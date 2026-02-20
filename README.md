@@ -542,6 +542,7 @@ REACT_APP_API_BASE_URL=http://localhost:5000
 ## Screenshots & Output
 ### Login Page - Home Page of the website
 <img width="1920" height="1698" alt="screencapture-park-ease-6sr4-onrender-login-2026-02-20-12_01_14" src="https://github.com/user-attachments/assets/3b5355c3-9b6d-4a3e-9669-e4cfa272a4fa" />
+
 ### Registration - New User will register by provoiding the valid Info
 <img width="1920" height="897" alt="screencapture-park-ease-6sr4-onrender-register-2026-02-20-12_02_21" src="https://github.com/user-attachments/assets/7f570b22-19a9-4286-b667-edc9268a9bd2" />
 
