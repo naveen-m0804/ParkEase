@@ -1,4 +1,4 @@
-# 🅿️ ParkEase — Smart Urban Parking Platform
+# 🅿️ VoidPark — Smart Urban Parking Platform
 
 > A mobile-first, peer-to-peer parking marketplace that connects people who have unused parking space with those who need it — in real time.
 
@@ -8,7 +8,7 @@
 
 1. [Abstract](#abstract)
 2. [Problem Statement](#problem-statement)
-3. [Why ParkEase?](#why-parkease)
+3. [Why VoidPark?](#why-voidpark)
 4. [Key Features](#key-features)
 5. [Application Flow](#application-flow)
 6. [Architecture Overview](#architecture-overview)
@@ -31,7 +31,7 @@
 
 ## Abstract
 
-ParkEase is a mobile-first web application designed to solve the growing urban parking crisis in metropolitan cities like Chennai, Bengaluru, Mumbai, and similar densely populated areas. The platform creates a shared economy around unused private parking spaces — allowing any registered user to both **offer** a parking space from their property and **book** a slot at someone else's space.
+VoidPark is a mobile-first web application designed to solve the growing urban parking crisis in metropolitan cities like Chennai, Bengaluru, Mumbai, and similar densely populated areas. The platform creates a shared economy around unused private parking spaces — allowing any registered user to both **offer** a parking space from their property and **book** a slot at someone else's space.
 
 The system is built on a role-free model, meaning every user has identical access privileges. Once registered, a person can seamlessly switch between being a parking provider and a parking seeker without any role switching or separate account management. The platform handles real-time availability tracking, transactional booking to prevent double-booking, dynamic pricing by vehicle type and duration, and integrated payment processing via Razorpay — making it a complete end-to-end urban parking solution.
 
@@ -51,9 +51,9 @@ There is currently no simple, accessible platform that connects these two groups
 
 ---
 
-## Why ParkEase?
+## Why VoidPark?
 
-| Traditional Parking | ParkEase |
+| Traditional Parking | VoidPark |
 |---|---|
 | Fixed municipal parking lots, often far from destination | Hyperlocal private spaces near the destination |
 | No real-time availability info | Live slot availability via Socket.IO |
@@ -308,7 +308,7 @@ Profile Page (Any Time)
 
 ## Real-Time System
 
-ParkEase uses **Socket.IO** to maintain live sync between all connected clients.
+VoidPark uses **Socket.IO** to maintain live sync between all connected clients.
 
 **Events:**
 
@@ -410,7 +410,7 @@ This launches Google Maps (or the Maps app on mobile) with the parking location 
 ## Folder Structure
 
 ```
-ParkEase/
+VoidPark/
 ├── client/                         # React frontend
 │   ├── public/
 │   └── src/
@@ -469,20 +469,20 @@ ParkEase/
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/naveen-m0804/ParkEase.git
-cd ParkEase
+git clone https://github.com/naveen-m0804/VoidPark.git
+cd VoidPark
 ```
 
 **2. Set up the database**
 ```bash
 # Connect to PostgreSQL and create the database
 psql -U postgres
-CREATE DATABASE parkease;
-\c parkease
+CREATE DATABASE voidpark;
+\c voidpark
 CREATE EXTENSION postgis;
 
 # Run the schema
-psql -U postgres -d parkease -f server/db/schema.sql
+psql -U postgres -d voidpark -f server/db/schema.sql
 ```
 
 **3. Configure environment variables**
@@ -515,7 +515,7 @@ Create a `.env` file in the `server/` directory:
 
 ```env
 # Database
-DATABASE_URL=postgresql://postgres:password@localhost:5432/parkease
+DATABASE_URL=postgresql://postgres:password@localhost:5432/voidpark
 
 # Firebase Admin SDK
 FIREBASE_PROJECT_ID=your_project_id

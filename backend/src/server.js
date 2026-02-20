@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Server Entry Point
+// VoidPark - Server Entry Point
 // =============================================
+
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
@@ -29,7 +30,7 @@ app.use(express.json({ limit: '10mb' }));
 app.get('/health', (req, res) => {
   res.json({
     status: 'success',
-    message: 'ParkEase API is running.',
+    message: 'VoidPark API is running.',
     data: {
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
@@ -45,8 +46,8 @@ app.use('/api/v1', routes);
 app.get('/', (req, res) => {
   res.json({
     status: 'success',
-    message: 'Welcome to ParkEase Backend API. Use /api/v1 for endpoints.',
-    docs: 'https://github.com/naveen-m0804/ParkEase' // Optional: Link to your repo or docs
+    message: 'Welcome to VoidPark Backend API. Use /api/v1 for endpoints.',
+    docs: 'https://github.com/naveen-m0804/VoidPark' // Optional: Link to your repo or docs
   });
 });
 
@@ -66,7 +67,7 @@ app.use(errorHandler);
 // ── Start Server ──
 async function startServer() {
   try {
-    console.log('\\n🚀 Starting ParkEase Server...\\n');
+    console.log('\n🚀 Starting VoidPark Server...\n');
 
     // 1. Test database connection
     await testConnection();
@@ -81,7 +82,7 @@ async function startServer() {
     // 4. Start HTTP server
     server.listen(config.port, () => {
       console.log(`\n${'='.repeat(40)}`);
-      console.log(`   🅿️  ParkEase Server Running`);
+      console.log(`   🅿️  VoidPark Server Running`);
       console.log(`${'='.repeat(40)}`);
       console.log(`   🌐 Server:      Listening on port ${config.port}`);
       console.log(`   🌍 Env:         ${config.nodeEnv}`);

@@ -28,7 +28,7 @@ const ProtectedLayout = () => {
       <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-60 flex-col bg-secondary border-r border-border z-40">
         <div className="p-6 flex items-center gap-3">
           <BrandLogo className="h-8 w-8" />
-          <h1 className="text-xl font-extrabold">ParkEase</h1>
+          <h1 className="text-xl font-extrabold">VoidPark</h1>
         </div>
         <BottomNav variant="sidebar" />
       </aside>

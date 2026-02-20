@@ -1,13 +1,14 @@
 // =============================================
-// ParkEase - Seed Development Data
+// VoidPark - Seed Development Data
 // =============================================
+
 // Run with: npm run db:seed
 // =============================================
 const { pool } = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
 
 async function seedDatabase() {
-  console.log('🌱 Seeding ParkEase database with sample data...\\n');
+  console.log('🌱 Seeding VoidPark database with sample data...\n');
   const client = await pool.connect();
 
   try {

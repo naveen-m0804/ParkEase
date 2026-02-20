@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Route Index (aggregates all routes)
+// VoidPark - Route Index (aggregates all routes)
 // =============================================
+
 const { Router } = require('express');
 const userRoutes = require('./userRoutes');
 const parkingRoutes = require('./parkingRoutes');

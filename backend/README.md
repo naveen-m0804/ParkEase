@@ -1,4 +1,4 @@
-# 🅿️ ParkEase — Backend API
+# 🅿️ VoidPark — Backend API
 
 Smart Urban Parking Management System — Backend API Server
 
@@ -19,7 +19,7 @@ Smart Urban Parking Management System — Backend API Server
 ## 📁 Project Structure
 
 ```
-ParkEase/
+VoidPark/
 ├── backend/
 │   ├── .env                          ← Your secrets (not committed)
 │   ├── .env.example                  ← Template reference

@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - User Controller
+// VoidPark - User Controller
 // =============================================
+
 const UserService = require('../services/userService');
 
 const UserController = {

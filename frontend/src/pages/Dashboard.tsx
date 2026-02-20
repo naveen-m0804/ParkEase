@@ -65,7 +65,7 @@ const Dashboard = () => {
         <div className="max-w-3xl mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 shrink-0 md:hidden">
              <BrandLogo className="h-8 w-8" />
-             <h1 className="text-lg font-extrabold">ParkEase</h1>
+             <h1 className="text-lg font-extrabold">VoidPark</h1>
           </div>
 
           {searchOpen ? (

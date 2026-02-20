@@ -132,7 +132,7 @@ const Register = () => {
         <div className="text-center mb-8 flex flex-col items-center">
           <BrandLogo className="h-14 w-14 mb-3" />
           <h1 className="text-3xl font-extrabold mb-1">
-             ParkEase
+             VoidPark
           </h1>
           <p className="text-muted-foreground text-sm">
             Create your account

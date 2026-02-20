@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Zod Validation Middleware
+// VoidPark - Zod Validation Middleware
 // =============================================
+
 
 /**
  * Creates an Express middleware that validates req.body

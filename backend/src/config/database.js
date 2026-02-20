@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - PostgreSQL + PostGIS Connection Pool
+// VoidPark - PostgreSQL + PostGIS Connection Pool
 // =============================================
+
 const { Pool } = require('pg');
 const config = require('./index');
 

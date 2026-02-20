@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Firebase Admin SDK Initialization
+// VoidPark - Firebase Admin SDK Initialization
 // =============================================
+
 const admin = require('firebase-admin');
 const path = require('path');
 const fs = require('fs');

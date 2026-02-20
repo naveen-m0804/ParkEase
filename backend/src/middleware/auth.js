@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Firebase Authentication Middleware
+// VoidPark - Firebase Authentication Middleware
 // =============================================
+
 const { verifyIdToken } = require('../config/firebase');
 const { query } = require('../config/database');
 

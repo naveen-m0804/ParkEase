@@ -111,7 +111,7 @@ const Login = () => {
           <div className="flex flex-col items-center mb-8">
             <BrandLogo className="h-14 w-auto mb-4" />
             <h1 className="text-3xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
-              ParkEase
+              VoidPark
             </h1>
             <p className="text-muted-foreground text-sm font-medium">Smart Parking Solution</p>
           </div>

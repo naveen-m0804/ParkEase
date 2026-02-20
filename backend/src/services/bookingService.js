@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Booking Service
+// VoidPark - Booking Service
 // =============================================
+
 // Handles all booking logic WITHOUT payment gateway.
 // Users book directly; payment is handled offline
 // between user and owner.

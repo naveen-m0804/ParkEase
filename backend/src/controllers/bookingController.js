@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Booking Controller
+// VoidPark - Booking Controller
 // =============================================
+
 const bookingService = require('../services/bookingService');
 
 // ── 1. Create Booking (confirmed immediately, no payment gateway) ──

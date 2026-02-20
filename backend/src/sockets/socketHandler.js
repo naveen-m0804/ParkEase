@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Socket.IO Handler
+// VoidPark - Socket.IO Handler
 // =============================================
+
 const { Server } = require('socket.io');
 
 let io = null;

@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Parking Service
+// VoidPark - Parking Service
 // =============================================
+
 const { pool, withTransaction } = require('../config/database');
 
 // ─────────────────────────────────────────────

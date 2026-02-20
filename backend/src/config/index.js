@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Environment Configuration Loader
+// VoidPark - Environment Configuration Loader
 // =============================================
+
 const dotenv = require('dotenv');
 const path = require('path');
 
@@ -16,7 +17,7 @@ const config = {
   db: {
     host: process.env.DB_HOST || 'localhost',
     port: parseInt(process.env.DB_PORT, 10) || 5432,
-    name: process.env.DB_NAME || 'parkease',
+    name: process.env.DB_NAME || 'voidpark',
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD || '',
     url: process.env.DATABASE_URL || null,

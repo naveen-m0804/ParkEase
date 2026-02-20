@@ -1,7 +1,7 @@
 {
-  "name": "parkease-backend",
+  "name": "voidpark-backend",
   "version": "1.0.0",
-  "description": "ParkEase - Smart Urban Parking Backend API",
+  "description": "VoidPark - Smart Urban Parking Backend API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

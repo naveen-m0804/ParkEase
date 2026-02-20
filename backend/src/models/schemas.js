@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Zod Validation Schemas
+// VoidPark - Zod Validation Schemas
 // =============================================
+
 const { z } = require('zod');
 
 // ── USER SCHEMAS ──

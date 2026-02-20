@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - User Service
+// VoidPark - User Service
 // =============================================
+
 const { query, getClient } = require('../config/database');
 const { deleteFirebaseUser } = require('../config/firebase');
 

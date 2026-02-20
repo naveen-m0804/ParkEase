@@ -13,7 +13,7 @@ export const BrandLogo = ({ className }: { className?: string }) => {
   return (
     <img 
       src={logo} 
-      alt="ParkEase Logo" 
+      alt="VoidPark Logo" 
       className={cn("h-10 w-auto object-contain drop-shadow-md", className)}
       onError={() => setError(true)}
     />

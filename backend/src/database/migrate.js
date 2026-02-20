@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Database Migration Script
+// VoidPark - Database Migration Script
 // =============================================
+
 // Run with: npm run db:migrate
 // =============================================
 const { pool, testConnection } = require('../config/database');
@@ -126,7 +127,7 @@ CREATE TRIGGER set_parking_spaces_updated_at
 `;
 
 async function runMigration() {
-  console.log('🚀 Starting ParkEase database migration...\n');
+  console.log('🚀 Starting VoidPark database migration...\n');
 
   try {
     await testConnection();

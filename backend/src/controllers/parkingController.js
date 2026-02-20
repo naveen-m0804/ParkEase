@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Parking Controller
+// VoidPark - Parking Controller
 // =============================================
+
 const parkingService = require('../services/parkingService');
 
 // ── 1. Create Parking Space ──

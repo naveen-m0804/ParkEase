@@ -1,6 +1,7 @@
 // =============================================
-// ParkEase - Global Error Handler Middleware
+// VoidPark - Global Error Handler Middleware
 // =============================================
+
 const config = require('../config/index');
 
 /**
