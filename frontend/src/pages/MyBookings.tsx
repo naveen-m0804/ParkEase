@@ -62,8 +62,20 @@ const MyBookings = () => {
 
   const handleEndBooking = async () => {
     if (!endBookingId || !endTime) return;
+
+    // Client-side validation
+    const endDate = new Date(endTime);
+    const booking = myBookings.find(b => b.id === endBookingId);
+    if (booking) {
+      const startDate = new Date(booking.start_time);
+      if (endDate <= startDate) {
+        toast.error('⏰ End time must be after the booking start time. Please choose a valid time.');
+        return;
+      }
+    }
+
     try {
-      await api.put(`/bookings/${endBookingId}/end`, { endTime: new Date(endTime).toISOString() });
+      await api.put(`/bookings/${endBookingId}/end`, { endTime: endDate.toISOString() });
       toast.success('Booking ended');
       setEndBookingId(null);
       fetchBookings();

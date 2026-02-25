@@ -41,6 +41,38 @@ const ParkingDetail = () => {
     return d.toISOString().slice(0, 16);
   };
 
+  // Minimum datetime for Start Time (current time)
+  const nowLocal = toLocalISO(new Date());
+
+  // Validation helpers
+  const isStartTimeInPast = () => {
+    if (!startTime) return false;
+    const selected = new Date(startTime);
+    const now = new Date();
+    // 5-minute grace window to match backend
+    return selected.getTime() < now.getTime() - 5 * 60 * 1000;
+  };
+
+  const isEndTimeInvalid = () => {
+    if (openEnded || !endTime) return false;
+    const end = new Date(endTime);
+    const now = new Date();
+    if (end.getTime() < now.getTime()) return 'past';
+    if (startTime && end <= new Date(startTime)) return 'before_start';
+    return false;
+  };
+
+  const getValidationError = (): string | null => {
+    if (!startTime) return null;
+    if (isStartTimeInPast()) return 'Start time cannot be in the past';
+    const endIssue = isEndTimeInvalid();
+    if (endIssue === 'past') return 'End time cannot be in the past';
+    if (endIssue === 'before_start') return 'End time must be after start time';
+    return null;
+  };
+
+  const validationError = startTime ? getValidationError() : null;
+
   useEffect(() => {
     const fetchParking = async () => {
       try {
@@ -90,6 +122,22 @@ const ParkingDetail = () => {
   };
 
   const handleBook = async () => {
+    // Client-side validation before sending to server
+    if (isStartTimeInPast()) {
+      toast.error('⏰ Cannot book for a past date or time. Please select a current or future start time.');
+      return;
+    }
+
+    const endIssue = isEndTimeInvalid();
+    if (endIssue === 'past') {
+      toast.error('⏰ End time cannot be in the past. Please select a future end time.');
+      return;
+    }
+    if (endIssue === 'before_start') {
+      toast.error('⏰ End time must be after the start time. Please select a valid time range.');
+      return;
+    }
+
     setBooking(true);
     try {
       const body: any = {
@@ -101,8 +149,6 @@ const ParkingDetail = () => {
         body.endTime = new Date(endTime).toISOString();
       }
       
-      // We pass selectedSlot if available, though backend might ignore it depending on implementation
-      // Just for intent.
       if (selectedSlot) body.slotId = selectedSlot;
 
       const { data } = await api.post('/bookings', body);
@@ -232,9 +278,13 @@ const ParkingDetail = () => {
                 <Input
                   type="datetime-local"
                   value={startTime}
+                  min={nowLocal}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="h-12 bg-muted/50 border-input font-medium"
+                  className={cn("h-12 bg-muted/50 border-input font-medium", isStartTimeInPast() && "border-destructive/50 bg-destructive/5")}
                 />
+                {isStartTimeInPast() && (
+                  <p className="text-xs text-destructive font-medium">⚠️ Start time cannot be in the past</p>
+                )}
               </div>
 
               <div className="flex items-center justify-between bg-muted/30 p-3 rounded-lg border border-border/50">
@@ -248,9 +298,16 @@ const ParkingDetail = () => {
                   <Input
                     type="datetime-local"
                     value={endTime}
+                    min={startTime || nowLocal}
                     onChange={(e) => setEndTime(e.target.value)}
-                    className="h-12 bg-muted/50 border-input font-medium"
+                    className={cn("h-12 bg-muted/50 border-input font-medium", isEndTimeInvalid() && "border-destructive/50 bg-destructive/5")}
                   />
+                  {isEndTimeInvalid() === 'past' && (
+                    <p className="text-xs text-destructive font-medium">⚠️ End time cannot be in the past</p>
+                  )}
+                  {isEndTimeInvalid() === 'before_start' && (
+                    <p className="text-xs text-destructive font-medium">⚠️ End time must be after start time</p>
+                  )}
                 </motion.div>
               )}
             </div>
@@ -267,13 +324,19 @@ const ParkingDetail = () => {
               </div>
             </div>
 
+            {validationError && (
+              <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 text-center">
+                <p className="text-sm font-medium text-destructive">⚠️ {validationError}</p>
+              </div>
+            )}
+
             <Button 
                 size="lg" 
                 className={cn("w-full text-lg font-bold h-14 shadow-xl transition-all", 
-                    availableCount > 0 ? "shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.02]" : "opacity-80"
+                    availableCount > 0 && !validationError ? "shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.02]" : "opacity-80"
                 )}
                 onClick={handleBook} 
-                disabled={booking || !startTime || availableCount === 0}
+                disabled={booking || !startTime || availableCount === 0 || !!validationError}
             >
               {availableCount === 0 ? 'Fully Booked' : booking ? 'Confirming...' : 'Confirm Booking'}
             </Button>

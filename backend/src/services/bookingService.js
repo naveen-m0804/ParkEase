@@ -44,13 +44,32 @@ async function createBooking(userId, data) {
   return withTransaction(async (client) => {
     const startTime = new Date(data.startTime);
     const endTime = data.endTime ? new Date(data.endTime) : null;
+    const now = new Date();
 
-    // Validate times
-    // Relaxed validation: start time can be in the past (e.g., booking started "just now").
-    // We only strictly ensure that if endTime exists, it is > startTime.
+    // ── Validate: Prevent past date/time bookings ──
+    // Allow a 5-minute grace window so "book now" works smoothly
+    const graceMs = 5 * 60 * 1000;
+    if (startTime.getTime() < now.getTime() - graceMs) {
+      throw Object.assign(
+        new Error('Cannot book for a past date or time. Please select a current or future start time.'),
+        { statusCode: 400 }
+      );
+    }
 
+    // ── Validate: End time must be after start time ──
     if (endTime && endTime <= startTime) {
-      throw Object.assign(new Error('End time must be after start time.'), { statusCode: 400 });
+      throw Object.assign(
+        new Error('End time must be after the start time. Please select a valid end time.'),
+        { statusCode: 400 }
+      );
+    }
+
+    // ── Validate: End time must not be in the past ──
+    if (endTime && endTime.getTime() < now.getTime()) {
+      throw Object.assign(
+        new Error('End time cannot be in the past. Please select a future end time.'),
+        { statusCode: 400 }
+      );
     }
 
     // 1. Lock and verify the parking space
@@ -112,10 +131,10 @@ async function createBooking(userId, data) {
     const slotResult = await client.query(slotQuery, queryParams);
 
     if (slotResult.rows.length === 0) {
-      throw Object.assign(
-        new Error('No available slots for the selected time period.'),
-        { statusCode: 409 }
-      );
+      const message = data.slotId
+        ? 'The selected slot is already booked for this time period. Please choose a different slot or time.'
+        : 'No available slots for the selected time period.';
+      throw Object.assign(new Error(message), { statusCode: 409 });
     }
 
     const slot = slotResult.rows[0];
@@ -182,7 +201,10 @@ async function endBooking(bookingId, userId, endTime) {
     const start = new Date(booking.start_time);
 
     if (end <= start) {
-      throw Object.assign(new Error('End time must be after start time.'), { statusCode: 400 });
+      throw Object.assign(
+        new Error('End time must be after the booking start time. Please select a valid end time.'),
+        { statusCode: 400 }
+      );
     }
 
     const totalAmount = calculateAmount(parseFloat(booking.hourly_rate), start, end);

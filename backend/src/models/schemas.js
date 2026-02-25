@@ -60,11 +60,13 @@ const searchQuerySchema = z.object({
 
 // ── BOOKING SCHEMAS ──
 // endTime is OPTIONAL — user may not know when they'll return
+// slotId is OPTIONAL — user can select a specific slot, otherwise auto-assigned
 const createBookingSchema = z.object({
   parkingId: z.string().uuid(),
   vehicleType: z.enum(['car', 'bike', 'other']),
   startTime: z.string().datetime(),
   endTime: z.string().datetime().nullable().optional(),
+  slotId: z.string().uuid().nullable().optional(),
 });
 
 // End a booking — provide the actual end time

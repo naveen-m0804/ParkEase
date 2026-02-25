@@ -65,11 +65,15 @@ const errorHandler = (err, req, res, _next) => {
     });
   }
 
-  // Default server error
+  // Default error response
   const statusCode = err.statusCode || 500;
+  const isClientError = statusCode >= 400 && statusCode < 500;
+
   res.status(statusCode).json({
     status: 'error',
-    message: config.isDev ? err.message : 'Internal server error',
+    // Show actual message for client errors (4xx) in all environments
+    // Only hide message for server errors (5xx) in production
+    message: isClientError || config.isDev ? err.message : 'Internal server error',
     data: config.isDev ? { stack: err.stack } : null,
   });
 };
