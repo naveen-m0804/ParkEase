@@ -125,10 +125,16 @@ async function getParkingById(parkingId, startTime, endTime) {
 
   const space = spaceResult.rows[0];
 
-  // Prepare time range for checking availability
-  // If not provided, defaults to NOW() -> Infinity (checks current status)
-  const start = startTime ? new Date(startTime).toISOString() : new Date().toISOString();
-  const end = endTime ? new Date(endTime).toISOString() : '9999-12-31T23:59:59Z';
+  // Prepare time range for checking slot availability
+  // - If user specified startTime + endTime: check that exact range
+  // - If user specified only startTime (open-ended): check from start to infinity
+  // - If nothing specified: check current moment ONLY (not infinity!)
+  //   This way a slot booked 10-11 PM won't show as "occupied" at 7 PM
+  const now = new Date().toISOString();
+  const start = startTime ? new Date(startTime).toISOString() : now;
+  const end = endTime
+    ? new Date(endTime).toISOString()
+    : (startTime ? '9999-12-31T23:59:59Z' : now);
 
   // Get slots with dynamic status based on time range
   const slotsResult = await pool.query(
@@ -155,7 +161,36 @@ async function getParkingById(parkingId, startTime, endTime) {
     [parkingId, start, end]
   );
 
-  space.slots = slotsResult.rows;
+  // Get ALL upcoming/active bookings for each slot (for schedule display)
+  const upcomingResult = await pool.query(
+    `SELECT b.slot_id, b.start_time, b.end_time
+     FROM bookings b
+     JOIN parking_slots sl ON b.slot_id = sl.id
+     WHERE sl.parking_id = $1
+       AND b.booking_status = 'confirmed'
+       AND COALESCE(b.end_time, '9999-12-31T23:59:59Z'::timestamptz) > NOW()
+     ORDER BY b.start_time ASC`,
+    [parkingId]
+  );
+
+  // Group upcoming bookings by slot_id
+  const bookingsBySlot = {};
+  for (const row of upcomingResult.rows) {
+    if (!bookingsBySlot[row.slot_id]) {
+      bookingsBySlot[row.slot_id] = [];
+    }
+    bookingsBySlot[row.slot_id].push({
+      start_time: row.start_time,
+      end_time: row.end_time,
+    });
+  }
+
+  // Merge slots with their upcoming bookings
+  space.slots = slotsResult.rows.map(slot => ({
+    ...slot,
+    upcoming_bookings: bookingsBySlot[slot.id] || [],
+  }));
+
   return space;
 }
 

@@ -79,10 +79,19 @@ const ParkingDetail = () => {
         // Build query params
         const params = new URLSearchParams();
         if (startTime) params.append('startTime', new Date(startTime).toISOString());
-        if (endTime) params.append('endTime', new Date(endTime).toISOString());
+        if (endTime && !openEnded) params.append('endTime', new Date(endTime).toISOString());
         
         const { data } = await api.get(`/parking/${id}?${params.toString()}`);
         setParking(data.data);
+
+        // Auto-deselect if selected slot is no longer available for the chosen time
+        if (selectedSlot && data.data?.slots) {
+          const slot = data.data.slots.find((s: any) => s.id === selectedSlot);
+          if (slot && slot.status !== 'available') {
+            setSelectedSlot(null);
+            toast.info('Selected slot is not available for this time range. Please choose another.');
+          }
+        }
       } catch {
         toast.error('Parking space not found');
         navigate('/');
