@@ -94,10 +94,10 @@ async function createBooking(userId, data) {
     const hourlyRate = parseFloat(parking.hourly_rate);
 
     // 2. Find an available slot with row-level lock
-    // A slot is occupied if there's a confirmed booking where:
-    //   existing.start_time < COALESCE(new.end_time, 'infinity')
-    //   AND COALESCE(existing.end_time, 'infinity') > new.start_time
-    const endTimeParam = endTime ? endTime.toISOString() : '9999-12-31T23:59:59Z';
+    // For open-ended bookings, only check if slot is free at the start moment.
+    // The user will see upcoming bookings and must end their session before the next one.
+    // For fixed-range bookings, check the full range for overlaps.
+    const endTimeParam = endTime ? endTime.toISOString() : startTime.toISOString();
     
     let slotQuery = `
        SELECT sl.id, sl.slot_number

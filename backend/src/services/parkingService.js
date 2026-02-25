@@ -127,14 +127,13 @@ async function getParkingById(parkingId, startTime, endTime) {
 
   // Prepare time range for checking slot availability
   // - If user specified startTime + endTime: check that exact range
-  // - If user specified only startTime (open-ended): check from start to infinity
-  // - If nothing specified: check current moment ONLY (not infinity!)
-  //   This way a slot booked 10-11 PM won't show as "occupied" at 7 PM
+  // - If user specified only startTime (open-ended): check at start moment only
+  //   An open-ended user can book if the slot is free at start; they see upcoming
+  //   bookings in the schedule and must leave before the next one
+  // - If nothing specified: check current moment only
   const now = new Date().toISOString();
   const start = startTime ? new Date(startTime).toISOString() : now;
-  const end = endTime
-    ? new Date(endTime).toISOString()
-    : (startTime ? '9999-12-31T23:59:59Z' : now);
+  const end = endTime ? new Date(endTime).toISOString() : start;
 
   // Get slots with dynamic status based on time range
   const slotsResult = await pool.query(
